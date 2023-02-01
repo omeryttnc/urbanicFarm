@@ -12,7 +12,18 @@ public abstract class CommonPage {
     }
 
     private LoginPage loginPage;
-    private HomePage homePage;
+    private HomePage homePage ;
+    private RegisterPage registerPage ;
+
+
+    public RegisterPage getRegisterPage() {
+
+        if(registerPage ==null){
+            registerPage = new RegisterPage();
+        }
+
+        return registerPage;
+    }
 
     public LoginPage getLoginPage() {
         if (loginPage == null) {

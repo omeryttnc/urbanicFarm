@@ -2,14 +2,10 @@ package stepDefinitions.uiStepDef;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
-import org.junit.Assert;
 import utilities.BrowserUtilities;
 import utilities.ConfigurationReader;
 
 import java.util.List;
-
-import static stepDefinitions.Hooks.commonPage;
-import static stepDefinitions.Hooks.driver;
 
 public class Deneme_stepDef {
 
@@ -21,8 +17,9 @@ public class Deneme_stepDef {
 
     @Given("Scenario Outline {string} and {string}")
     public void scenarioOutlineAnd(String email, String password) {
-     //Assert.fail();
+        //Assert.fail();
         BrowserUtilities.loginMethod(email, password);
+        BrowserUtilities.localClear();
     }
 
     @Given("Configuration properties kullanarak")

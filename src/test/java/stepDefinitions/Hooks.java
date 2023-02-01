@@ -3,6 +3,7 @@ package stepDefinitions;
 
 import enums.USERINFO;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
@@ -69,6 +70,7 @@ public class Hooks {
 
     }
 
+    
 
     @Before("@DB")
     public void setupDatabase() {

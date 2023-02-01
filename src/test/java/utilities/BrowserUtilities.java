@@ -13,6 +13,8 @@ import static stepDefinitions.Hooks.commonPage;
 import static stepDefinitions.Hooks.driver;
 
 public class BrowserUtilities {
+
+
     public static void loginMethod(USERINFO userinfo) {
 
         driver.get("https://test.urbanicfarm.com/auth/login");

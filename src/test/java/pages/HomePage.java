@@ -10,4 +10,7 @@ public class HomePage extends CommonPage {
 
     @FindBy(xpath = "(//a[text()='Logout'])[2]")
     public WebElement logoutButton;
+
+    @FindBy(css = ".Navbar_textLink__f6_Al.mr-2")
+    public WebElement registerButton_navbar;
 }
