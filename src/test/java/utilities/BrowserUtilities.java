@@ -2,6 +2,7 @@ package utilities;
 
 import enums.USERINFO;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -53,4 +54,10 @@ public class BrowserUtilities {
         waitForPageToLoad(10);
 
     }
+
+    public static void scrollToElement(WebElement element){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", element);
+    }
+
+
 }
