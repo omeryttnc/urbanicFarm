@@ -13,4 +13,7 @@ public class HomePage extends CommonPage {
 
     @FindBy(css = ".Navbar_textLink__f6_Al.mr-2")
     public WebElement registerButton_navbar;
+
+    @FindBy(css = "nav>a[href^='/account/home']")
+    public WebElement accountName_navbar;
 }
