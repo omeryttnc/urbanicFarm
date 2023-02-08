@@ -12,13 +12,20 @@ public abstract class CommonPage {
     }
 
     private LoginPage loginPage;
-    private HomePage homePage ;
-    private RegisterPage registerPage ;
+    private HomePage homePage;
+    private RegisterPage registerPage;
+    private AccountPage accountPage;
 
+    public AccountPage getAccountPage() {
+        if (accountPage == null) {
+            accountPage = new AccountPage();
+        }
+        return accountPage;
+    }
 
     public RegisterPage getRegisterPage() {
 
-        if(registerPage ==null){
+        if (registerPage == null) {
             registerPage = new RegisterPage();
         }
 

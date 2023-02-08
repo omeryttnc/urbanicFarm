@@ -15,6 +15,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.time.Duration;
+import java.util.HashMap;
 
 import static stepDefinitions.Hooks.*;
 
@@ -32,23 +33,26 @@ public class Driver {
     Making our 'driver' instance private so that it is not reachable from outside the class.
     We make it static, because we want it to run before everything else, and also we will use it in a static method
      */
-    private static ThreadLocal<WebDriver> driverPool= new ThreadLocal<>();
+    private static ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
 
     /*
     Creating re-usable utility method that will return same 'driver' instance everytime we call it.
      */
     public static WebDriver getDriver() {
-
+        HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+        chromePrefs.put("download.default_directory", System.getProperty("user.dir") + "\\target");
         // isFullScreen = true;
         // isHeadless = true;
         // browserType = "chrome";
         //  browserType = "firefox";
 
 //***********Burayi false yaparak browser i gorebiliriz*******************************************
-       // isHeadless = false;
+        // isHeadless = false;
 
         //setting various capabilities for browsers
         ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("prefs", chromePrefs);
+
         if (isHeadless) {
             chromeOptions.addArguments("use-fake-ui-for-media-stream");
             chromeOptions.addArguments("--disable-gpu");
