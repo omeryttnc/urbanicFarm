@@ -2,6 +2,7 @@ package utilities;
 
 import enums.USERINFO;
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
@@ -71,6 +72,38 @@ public class BrowserUtilities {
     public static void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", element);
     }
+
+    /**
+     * methood used to clean text
+     * @param webElement webelemnt will be cleaned
+     * @since 01.02.2023
+     * @author omeryttnc
+     */
+    public static void cleanTextFromWebelemnt(WebElement webElement) {
+// omer -> 4 -> 4 defa backspace
+        // a -> 1
+        int valueLength = webElement.getAttribute("value").length();
+
+        for (int i = 0; i < valueLength; i++) {
+            actions.sendKeys(Keys.BACK_SPACE).perform();
+
+        }
+
+    }
+
+
+    /**
+     * method used to assert text color of web element
+     *
+     * @param rgba       webelementin rgba degeri
+     * @param webElement bakilcak weblement
+     * @author omeryttnc
+     * @since 01.02.2023
+     */
+    public void assertTextColor(String rgba, WebElement webElement) {
+        Assert.assertEquals(rgba, webElement.getCssValue("color"));
+    }
+
 
     /**
      * method verdigimiz listeden sectigimiz bir objeyi cikartip bize bir tane random obje verecek
@@ -258,16 +291,5 @@ public class BrowserUtilities {
         return flag;
     }
 
-    public static void cleanTextFromWebelemnt(WebElement webElement) {
-// omer -> 4 -> 4 defa backspace
-        webElement.click();
-        // a -> 1
-        int valueLength = webElement.getAttribute("value").length();
 
-        for (int i = 0; i < valueLength; i++) {
-            actions.sendKeys(Keys.BACK_SPACE).perform();
-
-        }
-
-    }
 }
