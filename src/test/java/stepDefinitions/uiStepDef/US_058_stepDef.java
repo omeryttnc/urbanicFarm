@@ -110,6 +110,7 @@ public class US_058_stepDef {
         allProductNames.removeAll(addProductNames);
 
         addedProduct = getRandomIndexFromList(allProductNames);
+        BrowserUtilities.wait(5);
         commonPage.getProductPage().addNewProduct_Name.sendKeys(addedProduct);
 
 
@@ -194,7 +195,7 @@ BrowserUtilities.wait(5);
         commonPage.getProductPage().update.click();
 
 
-        BrowserUtilities.toastMessageAssertion(addedProduct + " has been succesfully updated");
+        BrowserUtilities.toastMessageAssertion(addedProduct + " has been successfully updated");
 
     }
 
@@ -202,7 +203,8 @@ BrowserUtilities.wait(5);
     @When("the Delete button is clicked, yes- no options should appear.")
     public void theDeleteButtonIsClickedYesNoOptionsShouldAppear() {
         commonPage.getProductPage().delete.click();
-        BrowserUtilities.wait(2);
+        BrowserUtilities.wait(6);
+        // TODO: 15/02/2023 buranin uzerinde durmak lazim 
     }
 
     @Then("Yes-No options should appear.")
@@ -223,7 +225,7 @@ BrowserUtilities.wait(5);
     @When("Yes option is selected, the product should be removed from the page.")
     public void yesOptionIsSelectedTheProductShouldBeRemovedFromThePage() {
         commonPage.getProductPage().yes.click();
-        BrowserUtilities.toastMessageAssertion(addedProduct + " has been succesfully deleted");
+        BrowserUtilities.toastMessageAssertion(addedProduct + " has been successfully deleted");
 
         BrowserUtilities.wait(3);
 
