@@ -15,6 +15,14 @@ public abstract class CommonPage {
     private HomePage homePage;
     private RegisterPage registerPage;
     private AccountPage accountPage;
+    private ProductPage productPage;
+
+    public ProductPage getProductPage() {
+        if (productPage == null) {
+            productPage = new ProductPage();
+        }
+        return productPage;
+    }
 
     public AccountPage getAccountPage() {
         if (accountPage == null) {

@@ -3,10 +3,7 @@ package utilities;
 import enums.USERINFO;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -19,6 +16,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
@@ -75,9 +75,10 @@ public class BrowserUtilities {
 
     /**
      * methood used to clean text
+     *
      * @param webElement webelemnt will be cleaned
-     * @since 01.02.2023
      * @author omeryttnc
+     * @since 01.02.2023
      */
     public static void cleanTextFromWebelemnt(WebElement webElement) {
 // omer -> 4 -> 4 defa backspace
@@ -264,8 +265,7 @@ public class BrowserUtilities {
             fakeResult.append(random.nextInt(10));
 
         }
-        return "1"+fakeResult.toString();
-
+        return "1" + fakeResult.toString();
 
 
     }
@@ -291,5 +291,109 @@ public class BrowserUtilities {
         return flag;
     }
 
+
+    /**
+     * method javascript kullanilarak verilen webelemente tiklanmasini sagliyor
+     *
+     * @param webElement tiklanacak web element
+     * @author omeryttnc
+     * @since 11.02.2023
+     */
+    public static void scrollAndClickWithJS(WebElement webElement) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", webElement);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click()", webElement);
+    }
+
+    /**
+     * method token kullanarak local storage i doldurup, login sayfasina gitmeden login yapmamizi sagliyor
+     *
+     * @param token kullanicinin token i
+     * @param web   site icerisinde gitmek istedigimiz url note: urbanicfarm.com/  den sonrasi girilmesi lazim
+     * @author omeryttnc
+     * @since 11.02.2023
+     */
+    public static void loginWithToken(String token, String web) {
+        LocalStorage localStorage = ((WebStorage) driver).getLocalStorage();
+        String key1 = "a27c6fac85ae1295535e42c9d3e3f305";
+        String key2 = "e3e1601fca9c429344c15527cd542142";
+
+        String url = "https://test.urbanicfarm.com/";
+
+        String value2 = token;
+        String value1 = token.split("\\.")[1];
+        driver.get(url);
+        localStorage.setItem(key1, value1);
+        localStorage.setItem(key2, value2);
+
+        driver.get(url + web);
+        waitForPageToLoad(10);
+
+
+    }
+
+
+    /**
+     * method verilen urun isminin statusunu almamizi sagliyor
+     *
+     * @param productName statusunu kontrol etmek istedigimiz urunun ismi
+     * @return urununun statusu. Approved, In-Review , Rejected
+     * @author omeryttnc
+     * @since 11.02.2023
+     */
+    public static String getStatusOfProduct(String productName) {
+       return driver.findElement(By.xpath("//a[@title='"+productName+"']/../../span")).getText();
+
+    }
+
+    /**
+     * method verilen String degerinden harf olmayan herseyi cikarmak icin kullanildi
+     *
+     * @param str islem yapilacak String degeri
+     * @return sadece letter kalmis olan String
+     * @author omeryttnc
+     * @since 11.02.2023
+     */
+    public static String removeAllDigits(String str) {
+        return "";
+    }
+
+    /**
+     * method liste halinde verilen webelementden bir tane secmek icin kullanildi
+     * select by index gibi calisiyor
+     *
+     * @param webElement tiklandigi zaman liste acilan webelement
+     * @param times      kac defa arrow down a basacagiz
+     * @return secilen webelementin value degeri
+     * @author omeryttnc
+     * @since 11.02.2023
+     */
+    public static String chooseWebelementFromList(WebElement webElement, int times) {
+
+
+        return "";
+    }
+
+    /**
+     * method liste halinde verilen webelementden random olarak bir tane secmek icin kullanildi
+     *
+     * @param webElement tiklandigi zaman liste acilan webelement
+     * @param maxRandom  random olarak bir deger araliginda bir webelemente tiklayacak
+     * @return secilen webelementin value degeri
+     * @author omeryttnc
+     * @since 11.02.2023
+     */
+    public static String chooseWebelementFromListRandomly(WebElement webElement, int maxRandom) {
+
+
+        return "";
+    }
+
+
+    public static void toastMessageAssertion(String toastMessage) {
+        BrowserUtilities.waitForClickable(commonPage.getAccountPage().toastMessage);
+        String actualToastMessage = commonPage.getAccountPage().toastMessage.getText();
+        String expectedToastMessage = toastMessage;
+        Assert.assertEquals(expectedToastMessage, actualToastMessage);
+    }
 
 }
