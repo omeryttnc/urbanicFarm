@@ -1,0 +1,27 @@
+* -> icerir
+^ -> start with
+$ -> end with
+tag[attr=value]
+
+xpath child e geciyorken /
+css de bosluk yada > sembolu kullanilir
+
+. -> class
+# -> id
+xpath       css
+ /           >
+//          bosluk
+(xpath)[1]  :nth-of-type(1)
+            :first-of-type
+            :last-of-type
+
+
+
+xpath locator
+
+//tag[@attr='value']
+(//tag[@attr='value'])[1]
+//tag[text()='value']
+//tag[contains(@attr,'')]
+
+
