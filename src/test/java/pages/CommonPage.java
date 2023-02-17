@@ -16,6 +16,7 @@ public abstract class CommonPage {
     private RegisterPage registerPage;
     private AccountPage accountPage;
     private ProductPage productPage;
+    private DeliveryAndPickupSettings settings;
 
     public ProductPage getProductPage() {
         if (productPage == null) {
@@ -52,6 +53,13 @@ public abstract class CommonPage {
             homePage = new HomePage();
         }
         return homePage;
+    }
+
+    public DeliveryAndPickupSettings getSettings(){
+        if(settings==null){
+            settings = new DeliveryAndPickupSettings();
+        }
+        return settings;
     }
 }
 
