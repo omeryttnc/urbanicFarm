@@ -101,7 +101,7 @@ public class BrowserUtilities {
      * @author omeryttnc
      * @since 01.02.2023
      */
-    public void assertTextColor(String rgba, WebElement webElement) {
+    public static void assertTextColor(String rgba, WebElement webElement) {
         Assert.assertEquals(rgba, webElement.getCssValue("color"));
     }
 
@@ -396,4 +396,7 @@ public class BrowserUtilities {
         Assert.assertEquals(expectedToastMessage, actualToastMessage);
     }
 
+    public static void assertBorderColor(String rgba, WebElement webElement) {
+        Assert.assertEquals(rgba, webElement.getCssValue("border-top-color"));
+    }
 }
