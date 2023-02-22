@@ -17,6 +17,25 @@ public abstract class CommonPage {
     private AccountPage accountPage;
     private ProductPage productPage;
     private DeliveryAndPickupSettings settings;
+    private PayPalPage payPalPage;
+    private CartPage cartPage;
+
+    public PayPalPage getPayPalPage() {
+        if (payPalPage == null) {
+            payPalPage = new PayPalPage();
+        }
+
+        return payPalPage;
+    }
+
+    public CartPage getCartPage() {
+        if (cartPage == null) {
+            cartPage = new CartPage();
+
+        }
+
+        return cartPage;
+    }
 
     public ProductPage getProductPage() {
         if (productPage == null) {
@@ -55,8 +74,8 @@ public abstract class CommonPage {
         return homePage;
     }
 
-    public DeliveryAndPickupSettings getSettings(){
-        if(settings==null){
+    public DeliveryAndPickupSettings getSettings() {
+        if (settings == null) {
             settings = new DeliveryAndPickupSettings();
         }
         return settings;

@@ -25,3 +25,4 @@ xpath locator
 //tag[contains(@attr,'')]
 
 
+ // chain locator
