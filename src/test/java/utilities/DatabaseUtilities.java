@@ -96,6 +96,10 @@ public class DatabaseUtilities {
         updateQuerry("UPDATE `hub_product` SET `product_listing_state` = 'APPROVED' WHERE `product_listing_state` LIKE 'IN_REVIEW' order BY id DESC;");
 
     }
+
+    public static void deleteUsedPromoCode(){
+        updateQuerry("DELETE FROM promo_code_user");
+    }
 }
 
 
