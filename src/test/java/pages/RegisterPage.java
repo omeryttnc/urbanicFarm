@@ -17,7 +17,7 @@ public class RegisterPage extends CommonPage {
 
 
     // 2. yol
-    public WebElement webElement = getDriver().findElement(By.cssSelector("#registration_form_firstname"));
+  //  public WebElement webElement = getDriver().findElement(By.cssSelector("#registration_form_firstname"));
 
     @FindBy(css = "#registration_form_firstname")
     public WebElement firstname;

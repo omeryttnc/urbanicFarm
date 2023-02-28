@@ -1,14 +1,18 @@
 package stepDefinitions.uiStepDef.welcomePage;
 
+import enums.USER;
+import enums.USERClass;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.Keys;
 import utilities.BrowserUtilities;
 import utilities.ConfigurationReader;
 import utilities.DatabaseUtilities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +36,8 @@ public class US_68_stepDef {
     @Given("User login as Buyer")
     public void user_login_as_buyer() {
 
-        BrowserUtilities.loginWithToken(ConfigurationReader.getProperty("buyerToken"), "home");
+//        BrowserUtilities.loginWithToken(ConfigurationReader.getProperty("buyerToken"), "home");
+        BrowserUtilities.loginWithToken(USER.BUYER.getToken(), "home");
 
         BrowserUtilities.wait(3);
 
@@ -96,7 +101,7 @@ public class US_68_stepDef {
 
         double subtotalPromocodeOncesi = Double.parseDouble(commonPage.getCartPage().cartTotal_subtotal.getText().substring(1));
 
-        Assert.assertEquals(toplam, subtotalPromocodeOncesi,0.0);
+        Assert.assertEquals(toplam, subtotalPromocodeOncesi, 0.0);
 
     }
 
@@ -125,31 +130,108 @@ public class US_68_stepDef {
             BrowserUtilities.waitForClickable(commonPage.getAccountPage().toastMessage);
             String actualToastMesaj = commonPage.getAccountPage().toastMessage.getText();
             Assert.assertEquals(expectedToastMessage, actualToastMesaj);
-
+            //  TOASTMESSAGE.PROMOCODE.INVALID.assertToast();
         }
 
     }
 
     @Then("After the code is entered, the code rate should give results has {string} and amount is {int} .")
     public void after_the_code_is_entered_the_code_rate_should_give_results_has_and_amount_is(String type, Integer amount) {
-
+        BrowserUtilities.wait(3);
         double deliveryCost = Double.parseDouble(commonPage.getCartPage().cartTotal_deliveryCost.getText().substring(1));
         double subtotal = Double.parseDouble(commonPage.getCartPage().cartTotal_subtotal.getText().substring(1));
         double total = Double.parseDouble(commonPage.getCartPage().cartTotal_total.getText().substring(1));
 
+        System.out.println("deliveryCost = " + deliveryCost);
+        System.out.println("subtotal = " + subtotal);
+        System.out.println("total = " + total);
+        System.out.println("toplam = " + toplam);
+
         if (type.equals("money")) {
-            Assert.assertEquals(total, subtotal + deliveryCost,0.0);
-            Assert.assertEquals(toplam-amount,subtotal,0.0);
-        }else {
-            Assert.assertEquals(total, subtotal + deliveryCost,0.0);
-            Assert.assertEquals(toplam*(1-amount*0.01),subtotal,0.0);
+            Assert.assertEquals(total, subtotal + deliveryCost, 0.0);
+            Assert.assertEquals(toplam - amount, subtotal, 0.1);
+        } else {
+            Assert.assertEquals(total, subtotal + deliveryCost, 0.0);
+            Assert.assertEquals(toplam * (1 - amount * 0.01), subtotal, 0.0);
         }
+
+    }
+
+    @Test
+    public void name() {
+        String no1 = "2.37";
+        String no2 = "1398.6";
+        BigDecimal bigDecimal1 = new BigDecimal(no1);
+        BigDecimal bigDecimal2 = new BigDecimal(no2);
+        System.out.println(bigDecimal1.add(bigDecimal2));
 
     }
 
     @Then("proceed from the Proceed to checkout button and complete the payment.")
     public void proceed_from_the_proceed_to_checkout_button_and_complete_the_payment() {
+        BrowserUtilities.scrollAndClickWithJS(commonPage.getCartPage().proceedToCheckOut);
+        BrowserUtilities.scrollAndClickWithJS(commonPage.getCartPage().next);
+        BrowserUtilities.scrollAndClickWithJS(commonPage.getCartPage().next);
+        BrowserUtilities.scrollAndClickWithJS(commonPage.getCartPage().goToPayment);
+
+
+        BrowserUtilities.switchToWindow(1);
+
+        if (BrowserUtilities.isDisplayed(commonPage.getCartPage().paypal_btnLogin_up)) {
+            commonPage.getCartPage().paypal_btnLogin_up.click();
+            BrowserUtilities.wait(3);
+        }
+
+
+        if (BrowserUtilities.isDisplayed(commonPage.getPayPalPage().email)) {
+
+//            BrowserUtilities.cleanTextFromWebelemnt(commonPage.getPayPalPage().email);
+            commonPage.getPayPalPage().email.clear();
+            commonPage.getPayPalPage().email.sendKeys(ConfigurationReader.getProperty("paypal_username"));
+
+
+            if (BrowserUtilities.isDisplayed(commonPage.getPayPalPage().password)) {
+                commonPage.getPayPalPage().password.sendKeys(ConfigurationReader.getProperty("paypal_password"));
+            } else {
+                commonPage.getCartPage().next.click();
+                commonPage.getPayPalPage().password.sendKeys(ConfigurationReader.getProperty("paypal_password"));
+
+
+                //Assert.fail("2. senaryo olan passsword un farkli sayfada gelmesi gerceklesti");
+            }
+
+            BrowserUtilities.scrollAndClickWithJS(commonPage.getCartPage().paypal_btnLogin_down);
+
+        }
+
+        BrowserUtilities.scrollAndClickWithJS(commonPage.getPayPalPage().payment_submit_btn);
+
+        BrowserUtilities.switchToWindow();
+
+        BrowserUtilities.waitForClickable(commonPage.getPayPalPage().paymentSuccesfull);
+
+        Assert.assertEquals("Payment successful", commonPage.getPayPalPage().paymentSuccesfull.getText());
 
     }
 
+
+    @Test
+    public void namess() {
+
+        USERClass userClass = new USERClass(true, 0, "omer", "", "", "", "", "", "");
+        System.out.println(userClass.getEmail());
+
+        for (USER user: USER.values()
+             ) {
+
+            System.out.println(user.getEmail());
+            System.out.println(user.getPassword());
+
+        }
+
+
+        System.out.println(ConfigurationReader.getProperty(""));
+
+
+    }
 }

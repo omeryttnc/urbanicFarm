@@ -16,12 +16,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import static stepDefinitions.Hooks.*;
 
@@ -87,6 +86,7 @@ public class BrowserUtilities {
 
         for (int i = 0; i < valueLength; i++) {
             actions.sendKeys(Keys.BACK_SPACE).perform();
+            actions.sendKeys(Keys.DELETE).perform();
 
         }
 
@@ -341,7 +341,7 @@ public class BrowserUtilities {
      * @since 11.02.2023
      */
     public static String getStatusOfProduct(String productName) {
-       return driver.findElement(By.xpath("//a[@title='"+productName+"']/../../span")).getText();
+        return driver.findElement(By.xpath("//a[@title='" + productName + "']/../../span")).getText();
 
     }
 
@@ -399,4 +399,65 @@ public class BrowserUtilities {
     public static void assertBorderColor(String rgba, WebElement webElement) {
         Assert.assertEquals(rgba, webElement.getCssValue("border-top-color"));
     }
+
+    /**
+     * method is used to switch window by giving window index number
+     *
+     * @param index index number of windows
+     */
+    public static void switchToWindow(int index) {
+        waitForSecondWindow();
+        List<String> windowsHandles = new ArrayList<>(Driver.getDriver().getWindowHandles());
+
+        Driver.getDriver().switchTo().window(windowsHandles.get(index));
+
+
+    }
+
+    /**
+     * method is used to switch window
+     */
+    public static void switchToWindow() {
+
+        waitForSecondWindow();
+        String currentWindowHandle = Driver.getDriver().getWindowHandle(); //current
+
+        Set<String> windowHandles = Driver.getDriver().getWindowHandles(); // current other
+
+        for (String w : windowHandles) {
+
+            if (!currentWindowHandle.equals(w)) {
+
+                Driver.getDriver().switchTo().window(w);
+                break;
+
+            }
+
+        }
+
+    }
+
+    /**
+     * method is used to wait second window
+     */
+    private static void waitForSecondWindow() {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+    }
+
+    /**
+     * method used to add two double string in proper way
+     *
+     * @param no1 first double in String format
+     * @param no2 second double in String format
+     * @return proper addition in String format
+     */
+    public static String addTwoDouble(String no1, String no2) {
+
+        return "";
+    }
+
+
 }
