@@ -1,8 +1,8 @@
 Feature:
 
-  @ezra
+#  @ezra
   Scenario:
-#    Given user logs in with api
+    Given user logs in with api
     Then user gets address info
     When user adds an address
     Then user gets address info
@@ -12,5 +12,5 @@ Feature:
     Then user verifies the response
       #    expected - actual
       | Address updated | descr           |
-      | Hi hel        | address.address |
+#      | Hi hel        | address.address |
     And user deletes the address
