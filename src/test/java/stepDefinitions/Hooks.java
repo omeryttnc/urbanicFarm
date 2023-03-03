@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 
+import enums.USER;
 import enums.USERINFO;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -10,6 +11,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import pages.CommonPage;
+import utilities.ApiUtilities;
 import utilities.BrowserUtilities;
 import utilities.DatabaseUtilities;
 import utilities.Driver;
@@ -98,4 +100,9 @@ public class Hooks {
         BrowserUtilities.loginMethod(USERINFO.SELLER);
     }
 
+
+    @Before( "@ezra")
+    public void loginAPI() {
+        ApiUtilities.loginWithAPI(USER.EZRA.getEmail(), USER.EZRA.getPassword());
+    }
 }
