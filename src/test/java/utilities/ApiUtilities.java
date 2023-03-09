@@ -187,14 +187,24 @@ public class ApiUtilities {
 
         @Test
         public  void deleteAddress() {
+            int silmedenOncekiListeSize = getAdressisDefault().size();
+
+
         payload.put("addressId", getAdressisDefault().get(getAdressisDefault().size()-1));
 
             response = given().
                     contentType(ContentType.JSON).
-                    body(payload).
-                    spec(requestSpecification(USER.EZRA)).post("/account/address/delete");
+                    body(payload)
+//                    spec(requestSpecification(USER.EZRA))
+                    .auth().oauth2(USER.EZRA.getToken())
+                    .post("https://test.urbanicfarm.com/api/account/address/delete");
 
             response.prettyPrint();
+            int silmedenSonrakiListeSize = getAdressisDefault().size();
+
+            System.out.println("silmedenOncekiListeSize = " + silmedenOncekiListeSize);
+            System.out.println("silmedenSonrakiListeSize = " + silmedenSonrakiListeSize);
+            Assert.assertNotEquals(silmedenSonrakiListeSize,silmedenOncekiListeSize);
 
 
         }
@@ -219,7 +229,6 @@ public class ApiUtilities {
                 }
             }
 
-            System.out.printf(list.toString());
             return list;
 
         }
