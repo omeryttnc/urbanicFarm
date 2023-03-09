@@ -8,7 +8,9 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.asynchttpclient.request.body.multipart.StringPart;
 import org.junit.Assert;
+import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,6 +182,45 @@ public class ApiUtilities {
 
             response.prettyPrint();
 
+
+        }
+
+        @Test
+        public  void deleteAddress() {
+        payload.put("addressId", getAdressisDefault().get(getAdressisDefault().size()-1));
+
+            response = given().
+                    contentType(ContentType.JSON).
+                    body(payload).
+                    spec(requestSpecification(USER.EZRA)).post("/account/address/delete");
+
+            response.prettyPrint();
+
+
+        }
+
+//        @Test
+        public static List<Integer> getAdressisDefault() {
+
+            List<Integer> list = new ArrayList<>();
+            response = given().
+                    contentType(ContentType.JSON)
+                    .auth().oauth2(USER.EZRA.getToken())
+                    .post("https://" + (USER.EZRA.isTest() ? "test." : "") + "urbanicfarm.com/api/account/address/getAddress");
+            Assert.assertTrue(response.jsonPath().getBoolean("success"));
+            Assert.assertEquals(200, response.statusCode());
+
+            List<Integer> listId = response.jsonPath().getList("addresses.id");
+            List<Boolean> isDefault = response.jsonPath().getList("addresses.isDefault");
+
+            for (int i = 0; i < listId.size(); i++) {
+                if (!isDefault.get(i)) {
+                    list.add(listId.get(i));
+                }
+            }
+
+            System.out.printf(list.toString());
+            return list;
 
         }
     }
