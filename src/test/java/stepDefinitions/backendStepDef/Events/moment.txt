@@ -1,0 +1,7 @@
+const moment =require('moment');
+//console.log(moment().format('ddd, DD MMMM YYYY HH:mm:ss'))
+//console.log(moment().add(10,'days').format('ddd, DD MMMM YYYY HH:mm:ss'))
+
+pm.environment.set("startDate", moment().format('ddd, DD MMM YYYY HH:mm:ss')+" GMT");
+pm.environment.set("endDate", moment().add(-10,'days').format('ddd, DD MMM YYYY HH:mm:ss')+" GMT");
+

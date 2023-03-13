@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 
+import com.github.javafaker.Faker;
 import enums.USER;
 import enums.USERINFO;
 import io.cucumber.java.After;
@@ -16,11 +17,14 @@ import utilities.BrowserUtilities;
 import utilities.DatabaseUtilities;
 import utilities.Driver;
 
+import java.util.Random;
+
 
 public class Hooks {
     public static WebDriver driver;
     public static CommonPage commonPage;
-
+public static Faker faker = new Faker();
+public static Random random = new Random();
 
     public static Actions actions;
     public static boolean isCookiesDeleted = true;
